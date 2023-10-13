@@ -1,10 +1,13 @@
-import { UserButton } from "@clerk/nextjs"
+import { auth } from "@clerk/nextjs"
 
 export default function Home() {
+  const { userId } = auth();
+
+  if (!userId) return "You need to be connected to access."
+
   return (
     <div>
-      Home !
-      <UserButton afterSignOutUrl="/"/>
+      Je suis mon dashboard
     </div>
   )
 }
