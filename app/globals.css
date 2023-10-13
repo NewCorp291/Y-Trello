@@ -74,3 +74,23 @@
     @apply bg-background text-foreground;
   }
 }
+
+.bg-LOW {
+  background-color: #4ade80;
+}
+
+.bg-MEDIUM {
+  background-color: #fb923c;
+}
+
+.bg-IMPORTANT {
+  background-color: #dc2626;
+}
+
+.title-input:focus-visible {
+  box-shadow: none !important;
+}
+
+.title-input:focus {
+  box-shadow: none !important;
+}
