@@ -44,6 +44,22 @@ export const CardItem = ({card}: CardProps) => {
     }
   }
 
+  const deleteCard = async (cardId: string) => {
+    try {
+      const response = await fetch(`/api/cards/${cardId}`, {
+        method: 'DELETE'
+      });
+
+      router.refresh();
+      toast.success("The card has been deleted successfully !", { position: "top-right" });
+    } catch (error) {
+      console.error(error)
+      toast.error("Something went wrong", { position: "top-right" });
+    }
+
+    setOpen(false);
+  }
+
   const switchColumnCard = async (card: Card) => {
     let newState = '';
 
@@ -121,6 +137,7 @@ export const CardItem = ({card}: CardProps) => {
               </div>
             </div>
             <DialogFooter>
+              <Button type="button" variant="destructive" onClick={() => deleteCard(card.id)}>Delete</Button>
               <Button type="submit" disabled={isLoading} onClick={() => setOpen(false)}>Update</Button>
             </DialogFooter>
           </form>
