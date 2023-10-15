@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
+import { io } from "socket.io-client";
 
 export async function PATCH(req: Request, { params }: { params: { cardId: string }}) {
   try {
@@ -21,6 +22,9 @@ export async function PATCH(req: Request, { params }: { params: { cardId: string
         ...values,
       }
     });
+
+    const socket = io("http://localhost:3001");
+    socket.emit("card:update", card);
 
     return NextResponse.json(card);
   } catch (error) {
@@ -43,6 +47,9 @@ export async function DELETE(req: Request, { params }: { params: { cardId: strin
         id: cardId,
       },
     });
+
+    const socket = io("http://localhost:3001");
+    socket.emit("card:delete", card.id);
 
     return NextResponse.json(card);
   } catch (error) {

@@ -8,19 +8,27 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectItem, SelectTrigger, SelectContent, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import io from "socket.io-client";
 
 interface CardProps {
   card: Card;
 }
 
+const socket = io("http://localhost:3001");
+
 export const CardItem = ({card}: CardProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
-
   const router = useRouter();
+  const [socket, setSocket] = useState<any>(undefined);
+
+  useEffect(() => {
+    const socket = io("http://localhost:3001");
+    setSocket(socket);
+  }, []);
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -34,7 +42,6 @@ export const CardItem = ({card}: CardProps) => {
         body: JSON.stringify(Object.fromEntries(formData)),
       })
 
-      router.refresh();
       toast.success("The card has been updated successfully !", { position: "top-right" });
     } catch (error) {
       console.error(error)
@@ -49,8 +56,7 @@ export const CardItem = ({card}: CardProps) => {
       const response = await fetch(`/api/cards/${cardId}`, {
         method: 'DELETE'
       });
-
-      router.refresh();
+      
       toast.success("The card has been deleted successfully !", { position: "top-right" });
     } catch (error) {
       console.error(error)
@@ -77,8 +83,6 @@ export const CardItem = ({card}: CardProps) => {
           state: newState
         })
       });
-
-      router.refresh();
     } catch (error) {
       console.error(error)
       toast.error("Something went wrong", { position: "top-right" });
@@ -112,7 +116,7 @@ export const CardItem = ({card}: CardProps) => {
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="priority" className="text-right">Priority</Label>
                 <Select name="priority" defaultValue={card.priority}>
-                  <SelectTrigger className="w-[180px]">
+                  <SelectTrigger className="w-[180px]" aria-controls="radix-:Rmbdd6qcq:">
                     <SelectValue placeholder={card.priority} defaultValue={card.priority}/>
                   </SelectTrigger>
                   <SelectContent>
@@ -125,7 +129,7 @@ export const CardItem = ({card}: CardProps) => {
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="state" className="text-right">State</Label>
                 <Select name="state" defaultValue={card.state}>
-                  <SelectTrigger className="w-[180px]">
+                  <SelectTrigger className="w-[180px]" aria-controls="radix-:Rmbdd6qcq:">
                     <SelectValue placeholder={card.state} />
                   </SelectTrigger>
                   <SelectContent>

@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
+import { io } from "socket.io-client";
 
 export async function POST(req: Request) {
   try {
@@ -18,6 +19,9 @@ export async function POST(req: Request) {
         state
       }
     });
+    
+    const socket = io("http://localhost:3001");
+    socket.emit("card", card);
 
     return NextResponse.json(card);
   } catch (error) {
