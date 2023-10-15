@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+#Documentation Technique - Y-Trello
 
-## Getting Started
+##Aperçu du Projet
 
-First, run the development server:
+Ce projet est un clone de l'application de gestion de tâches Trello. Il permet au utilisateurs de créer, organiser et gérer des tâches de manière collaborative. 
 
+###Voici les spécifités demandés :
+
+- Un **Board** communiquant,
+- 3 colonnes (ToDo, In progress, Done)
+- Une connexion/inscription libre
+- Mise à jour en "temps réel"
+
+###Voici les Technologies utilisées : 
+
+- **Front-end**: Next.js, Clerk.
+**Pourquoi l'utilisation de Next.js et Clerk ?**
+  **Next.js**(13) est un framework **React** pour construire des applications web Fullstack. On utilise **React Components** pour construire une interface utilisateur et **Next.js** pour des fonctionnalités supplémentaires et des optimisations.
+  **Clerk** est une librairie JavaScript qui permet de mettre en place facilement un système d'authentification (signIn / signUp) et qui fonctionne parfaitement avec Next.js. Elle donne la possibilité de se connecter grâce plusieurs plate-forme (Google, Git, ...) ou de s'authentifier normalement.
+  
+- **Base de données**: Prisma Studio, Supabase.
+**Pourquoi l'utilisation de Prisma Studio et Supabase ?**
+  **Prisma Studio** est un **ORM** qui permet au utilisateurs de mettre en place facilement une base de donnée grace au fichier 'schema.prisma' et qui possède une interface utilisateur qui permet de modifier simplement les données de la base.   **Prisma Studio** à besoin d'être liée à une base de donnée, pour ça nous avons utilisé **Supabase** qui est un plateforme permettant de mettre en place rapidement des bases de données SQL (dans notre cas c'est une base **Postgres**).
+
+- **Communication en temps réel**: Socket.io
+**Pourquoi l'utilisation de Soket.io**
+  **Socket.io** est une librairie qui permet une communication basé sur les events, bi-directionnel entre un client et un server.
+
+- **Server**: Express.js
+**Pourquoi l'utilisation de Express.js ?**
+  Dans notre cas **Express.js** ne sert que de passerelle entre le "Back-end" de **Next.js** et **Express.js** pour la bonne utilisation de **Socket.io**.
+
+##Fonctionnalités Clés :
+
+1. **Authentification** : Connexion et inscription des utilisateurs via **Clerk**
+2. **Création des Cartes** : Création d'une carte dans un des tableau en renseignant son titre
+3. **Gestion des Cartes** : Modification du titre, de la descritption, de la priorité, de l'état
+4. **Sauvegarde des données** : données stockées dans la base de donnée **Postgres SQL** sur **Supabase** grâce à **Prisma Studio**
+
+##Installation
+
+1. Clonez le répository :
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+git clone https://github.com/[votre_nom_utilisateur]/Y-Trello.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Installez les dépendances du projet depuis un Terminal :
+```bash
+cd Y-Trello
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Configurez les varaibles d'environnement. Créez un fichier '.env'  à la racine du projet et ajoutez les clés nécessaires pour **Next.js**, **Clerk** et **Supabase** :
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```bash
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=VOTRE_CLEE_PUBLIQUE_POUR_NEXTJS_ET_CLERK
+CLERK_SECRET_KEY=votre_clee_secrete_clerk
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
 
-## Learn More
+DATABASE_URL="l'url de votre base de donnée"
+```
+##Contact
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-# Y-Trello
-# Y-Trello
+Pour toute question ou préoccupation, veuillez contacter l'équipe de développement aux adresses mails : `lucas.dindault@ynov.com`, `etienne.bachelard@ynov.com`.
