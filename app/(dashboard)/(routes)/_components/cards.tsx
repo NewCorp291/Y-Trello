@@ -29,18 +29,18 @@ const Cards = ({cards, stateLabel}: TestProps) => {
     })
 
     socket.on('card:update', (card) => {
-      console.log(card);
-
       setInitialCards(cards => {
-        const index = cards.findIndex((t) => t.id === card.id);
-        console.log(index);
-        if (index === -1) {
-          return cards;
+        if (card.state === stateLabel) {
+          const index = cards.findIndex((t) => t.id === card.id);
+          if (index === -1) {
+            return [...cards, card];
+          }
+          const next = [...cards];
+          next[index] = card;
+          return next;
+        } else {
+          return cards.filter(c => c.id !== card.id)
         }
-        const next = [...cards];
-        next[index] = card;
-        console.log(next);
-        return next;
       })
     })
     
